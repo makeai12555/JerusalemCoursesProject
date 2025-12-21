@@ -1,6 +1,6 @@
-fetch("/api/course-data")
-  .then(response => response.json())
-  .then(data => {
+//fetch("/api/course-data")
+ // .then(response => response.json())
+ // .then(data => {
 
     // טקסטים
     document.getElementById("headline").innerText = data.headline;
