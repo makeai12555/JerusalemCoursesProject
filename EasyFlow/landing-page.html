@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+
+<html class="light" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CourseFlow - Create Landing Page</title>
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ecda",
+                        "primary-dark": "#0ebcb0",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#102220",
+                        "surface-light": "#ffffff",
+                        "surface-dark": "#1a2c2a",
+                        "text-main": "#111817",
+                        "text-muted": "#637573",
+                    },
+                    fontFamily: {
+                        "display": ["Heebo", "Inter", "sans-serif"], 
+                        "body": ["Heebo", "Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem", 
+                        "xl": "0.75rem",
+                        "2xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Heebo', sans-serif;
+        }
+        /* Custom scrollbar for preview area */
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>    <script>
+        // Load and display course data
+        window.addEventListener('DOMContentLoaded', function() {
+            const courseData = JSON.parse(localStorage.getItem('courseData') || '{}');
+            if (courseData.title) {
+                // Update page content with course data
+                const titleElement = document.querySelector('h1');
+                const descElement = document.querySelector('h1').nextElementSibling;
+                if (titleElement) titleElement.textContent = courseData.title;
+                if (descElement) descElement.textContent = courseData.description;
+                
+                // Update price in preview
+                const priceElements = document.querySelectorAll('button');
+                priceElements.forEach(btn => {
+                    if (btn.textContent.includes('₪')) {
+                        btn.textContent = `הירשם עכשיו - ₪${courseData.price}`;
+                    }
+                });
+            }
+        });
+
+        function goBack() {
+            window.location.href = 'course-creation.html';
+        }
+
+        function goToFlyerDesigner() {
+            window.location.href = 'flyer-designer.html';
+        }
+    </script></head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white min-h-screen flex flex-col group/design-root transition-colors duration-200">
+<!-- Header / Navbar Mockup -->
+<header class="w-full bg-surface-light dark:bg-surface-dark border-b border-gray-200 dark:border-gray-800 px-6 py-4 flex items-center justify-between sticky top-0 z-30">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 rounded bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-text-main">school</span>
+</div>
+<span class="font-bold text-lg hidden sm:block">CourseFlow</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-8 h-8 rounded-full flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-800 transition">
+<span class="material-symbols-outlined text-gray-500">notifications</span>
+</button>
+<div class="w-8 h-8 rounded-full bg-gray-300 overflow-hidden" data-alt="User profile avatar placeholder">
+<img alt="User" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0UUVu2rHT_MxkZu6FLggmsZzetzu78aSbxx1aCoP3DuOYfTeJj4o_fRuhrQefGmyTOZyNCb8RJbDJMBf9dXtLdbGnQK5VJil293CxUs5QUhzt7RQT9iSbwzNfPwfy4VGgMhwtFILjD_MLTw1oKbLpKW0AuzUqHTNmsrM3xnge3_1UoHUMFPdpZpt1_2rXah--_Nbz2AmAxef5u5k8r2nfBVnduqGkU3w71xd4FDXr5R58z2_3wwUlBHzDssCqbHszoCTk02xh840S"/>
+</div>
+</div>
+</header>
+<main class="flex-1 layout-container flex flex-col max-w-[1440px] mx-auto w-full px-4 md:px-8 lg:px-12 py-8 gap-8">
+<!-- Step Indicator -->
+<div class="w-full max-w-[800px] mx-auto">
+<div class="flex flex-col gap-2">
+<div class="flex justify-between items-end">
+<p class="text-text-main dark:text-white text-sm font-medium">שלב 3 מתוך 3: דף נחיתה שיווקי</p>
+<span class="text-primary font-bold text-xs bg-primary/10 px-2 py-1 rounded">100% הושלם</span>
+</div>
+<div class="h-2 w-full bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+<div class="h-full bg-primary w-full rounded-full"></div>
+</div>
+</div>
+</div>
+<!-- Header Text -->
+<div class="text-center max-w-[800px] mx-auto mb-4">
+<h1 class="text-3xl md:text-4xl font-bold text-text-main dark:text-white mb-2 tracking-tight">יצירת דף נחיתה שיווקי</h1>
+<p class="text-text-muted dark:text-gray-400 text-lg">
+                השתמש בנתונים מהשלבים הקודמים ומהפלאייר כדי ליצור דף נחיתה שיווקי ומזמין באופן אוטומטי.
+            </p>
+</div>
+<!-- Main Grid Layout -->
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8 h-full">
+<!-- Right Column: Configuration (Sidebar) -->
+<div class="lg:col-span-5 flex flex-col gap-6 order-2 lg:order-1">
+<!-- Flyer Analysis Card -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary">auto_fix_high</span>
+<h2 class="text-lg font-bold">נתונים מהפלאייר</h2>
+</div>
+<span class="text-xs font-medium text-green-600 bg-green-100 dark:bg-green-900/30 dark:text-green-400 px-2 py-1 rounded-full">זוהה בהצלחה</span>
+</div>
+<div class="flex gap-4 mb-4">
+<div class="w-20 h-28 shrink-0 rounded-lg overflow-hidden bg-gray-100 relative shadow-inner">
+<div class="absolute inset-0 bg-cover bg-center opacity-80" data-alt="Abstract blurry representation of a flyer document" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDElJbAMaFjg5hDSRg3tlK8FI5ZV-WCayNcHaWkpCDpofzXmaojIq7INI0fLfpKOk8tgEk245WgVzGwJ6ZrOcK53tohagKlpzWOrfzOpZVoc53RCTGl2SALnOBncGJW9o6hiQ8M0c52v1Olxd2_Qs-m8M-z5Rdc6H0xaImqIqxj9xxni4_CiBjMtHBmwO5wV4BjVRPpm1XdVrYOHIAxZAyQ61KvNsEt0K0X3vSQGujhnEoNMRZabtmU8ZN5eFeeEK-w-0qVnCNul7pQ');"></div>
+</div>
+<div class="flex-1 flex flex-col gap-2">
+<p class="text-sm text-text-muted dark:text-gray-400">המערכת זיהתה נתונים מתוך הפלאייר שהעלית. נתונים אלו ישמשו למילוי האוטומטי.</p>
+<button class="self-start text-xs font-bold text-primary hover:text-primary-dark underline decoration-2 underline-offset-4 transition-colors">הצג פלאייר מקורי</button>
+</div>
+</div>
+<div class="flex flex-wrap gap-2">
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background-light dark:bg-gray-800 text-xs font-medium border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-[16px] text-text-muted">payments</span>
+                            מחיר: ₪450
+                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background-light dark:bg-gray-800 text-xs font-medium border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-[16px] text-text-muted">calendar_today</span>
+                            15/08/2024
+                        </div>
+<div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-background-light dark:bg-gray-800 text-xs font-medium border border-gray-200 dark:border-gray-700">
+<span class="material-symbols-outlined text-[16px] text-text-muted">location_on</span>
+                            תל אביב
+                        </div>
+<button class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg bg-primary/10 hover:bg-primary/20 text-primary text-xs font-bold transition-colors ml-auto">
+<span class="material-symbols-outlined text-[16px]">refresh</span>
+                            נתח שוב
+                        </button>
+</div>
+</div>
+<!-- Content Editor -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800 flex flex-col gap-4">
+<h2 class="text-lg font-bold">עריכת תוכן הדף</h2>
+<div class="space-y-4">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-text-main dark:text-gray-300">כותרת ראשית</label>
+<input class="w-full px-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white focus:border-primary focus:ring-primary text-sm shadow-sm" type="text" value="סדנת צילום אורבני למתחילים"/>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-text-main dark:text-gray-300">כותרת משנה</label>
+<input class="w-full px-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white focus:border-primary focus:ring-primary text-sm shadow-sm" type="text" value="למד את היסודות לצילום רחוב מרהיב בתל אביב"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-text-main dark:text-gray-300">מחיר הקורס</label>
+<div class="relative">
+<span class="absolute right-3 top-2.5 text-gray-500">₪</span>
+<input class="w-full pr-8 pl-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white focus:border-primary focus:ring-primary text-sm shadow-sm" type="text" value="450"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-text-main dark:text-gray-300">טקסט כפתור</label>
+<input class="w-full px-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white focus:border-primary focus:ring-primary text-sm shadow-sm" type="text" value="הירשם עכשיו"/>
+</div>
+</div>
+<div class="space-y-1.5">
+<label class="text-sm font-medium text-text-main dark:text-gray-300">תיאור הקורס</label>
+<textarea class="w-full px-4 py-2.5 rounded-lg border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-text-main dark:text-white focus:border-primary focus:ring-primary text-sm shadow-sm resize-none" rows="4">הצטרפו אלינו לסדנה מעשית שבה נלמד את עקרונות הצילום האורבני. נלמד על קומפוזיציה, אור וצל, וכיצד לתפוס רגעים ייחודיים בנוף העירוני. מתאים לכל הרמות.</textarea>
+</div>
+</div>
+</div>
+<!-- Theme Selector -->
+<div class="bg-surface-light dark:bg-surface-dark rounded-xl p-5 shadow-sm border border-gray-100 dark:border-gray-800">
+<h2 class="text-lg font-bold mb-4">עיצוב וצבעים</h2>
+<div class="grid grid-cols-3 gap-4">
+<!-- Theme Option 1 -->
+<label class="cursor-pointer group relative">
+<input checked="" class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-2 p-3 rounded-lg border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+<div class="flex gap-1 mb-1">
+<div class="w-4 h-4 rounded-full bg-[#13ecda]"></div>
+<div class="w-4 h-4 rounded-full bg-[#111817]"></div>
+</div>
+<span class="text-sm font-medium text-center">מודרני</span>
+</div>
+<div class="absolute top-2 left-2 opacity-0 peer-checked:opacity-100 text-primary transition-opacity">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+</label>
+<!-- Theme Option 2 -->
+<label class="cursor-pointer group relative">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-2 p-3 rounded-lg border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+<div class="flex gap-1 mb-1">
+<div class="w-4 h-4 rounded-full bg-[#6366f1]"></div>
+<div class="w-4 h-4 rounded-full bg-[#1e1b4b]"></div>
+</div>
+<span class="text-sm font-medium text-center">עסקי</span>
+</div>
+<div class="absolute top-2 left-2 opacity-0 peer-checked:opacity-100 text-primary transition-opacity">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+</label>
+<!-- Theme Option 3 -->
+<label class="cursor-pointer group relative">
+<input class="peer sr-only" name="theme" type="radio"/>
+<div class="flex flex-col gap-2 p-3 rounded-lg border-2 border-transparent peer-checked:border-primary peer-checked:bg-primary/5 hover:bg-gray-50 dark:hover:bg-gray-800 transition-all">
+<div class="flex gap-1 mb-1">
+<div class="w-4 h-4 rounded-full bg-[#f43f5e]"></div>
+<div class="w-4 h-4 rounded-full bg-[#881337]"></div>
+</div>
+<span class="text-sm font-medium text-center">נועז</span>
+</div>
+<div class="absolute top-2 left-2 opacity-0 peer-checked:opacity-100 text-primary transition-opacity">
+<span class="material-symbols-outlined text-lg">check_circle</span>
+</div>
+</label>
+</div>
+</div>
+</div>
+<!-- Left Column: Live Preview (Main) -->
+<div class="lg:col-span-7 flex flex-col h-full order-1 lg:order-2 sticky top-24">
+<div class="flex items-center justify-between mb-3">
+<div class="flex items-center gap-2">
+<span class="text-sm font-bold text-text-muted">תצוגה מקדימה חיה</span>
+<div class="animate-pulse w-2 h-2 rounded-full bg-green-500"></div>
+</div>
+<div class="flex items-center bg-gray-200 dark:bg-gray-700 rounded-lg p-1">
+<button class="p-1.5 rounded hover:bg-white dark:hover:bg-gray-600 shadow-sm transition text-text-main dark:text-white">
+<span class="material-symbols-outlined text-lg">desktop_mac</span>
+</button>
+<button class="p-1.5 rounded hover:bg-white dark:hover:bg-gray-600 transition text-gray-500 dark:text-gray-400">
+<span class="material-symbols-outlined text-lg">smartphone</span>
+</button>
+</div>
+</div>
+<!-- Browser Window Container -->
+<div class="flex-1 bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-xl border border-gray-200 dark:border-gray-700 flex flex-col h-[700px] lg:h-auto min-h-[500px]">
+<!-- Browser Bar -->
+<div class="h-10 bg-gray-100 dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 flex items-center px-4 gap-2">
+<div class="flex gap-1.5">
+<div class="w-3 h-3 rounded-full bg-red-400"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+<div class="w-3 h-3 rounded-full bg-green-400"></div>
+</div>
+<div class="flex-1 mx-4">
+<div class="w-full max-w-[400px] h-6 bg-white dark:bg-gray-900 rounded text-center text-[10px] leading-6 text-gray-400 font-mono mx-auto">courseflow.com/preview/p1938</div>
+</div>
+</div>
+<!-- Iframe Content (Simulated) -->
+<div class="flex-1 overflow-y-auto custom-scrollbar bg-white relative">
+<!-- Hero Section -->
+<div class="relative h-[300px] w-full flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 bg-black/40 z-10"></div>
+<div class="absolute inset-0 bg-cover bg-center" data-alt="Camera lens and photography equipment on a dark table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBWdRe5YCFfkgpsM9TLDL5itBEfWqyaeosTfA0ObFeuKo5XHYxZuYVNcSyTTqcDqRJMB9b95u3vCEI4Y1We_SNqkfHeCga3-toVW7HLRg0rNAESE-OKNpkbmPSSGWdPnx710U4XnVxi8s6FK9ja7oIkqvvCcPYouw0lHLqrsGlxGpVj_ShzFITIQ2T2E90Vtdde5i5ZkJel6CrJlN6V8CQlEcPYRl2V7IinoTtlW4tzljFAj3Wlujinbb3aP4FCzSDf_ll3dzHxiBcj')"></div>
+<div class="relative z-20 text-center px-6 max-w-[500px]">
+<span class="inline-block py-1 px-3 rounded-full bg-primary text-text-main text-xs font-bold mb-3 tracking-wide">סדנה מעשית</span>
+<h1 class="text-4xl font-extrabold text-white mb-2 leading-tight">סדנת צילום אורבני למתחילים</h1>
+<p class="text-gray-200 text-base mb-6 font-medium">למד את היסודות לצילום רחוב מרהיב בתל אביב</p>
+<button class="px-6 py-3 bg-primary hover:bg-primary-dark text-text-main font-bold rounded-lg shadow-lg hover:shadow-primary/50 transition-all transform hover:-translate-y-0.5">
+                                    הירשם עכשיו - ₪450
+                                </button>
+</div>
+</div>
+<!-- Stats/Features -->
+<div class="bg-gray-50 py-8 border-b border-gray-100">
+<div class="flex justify-center gap-8 md:gap-16 px-6">
+<div class="text-center">
+<p class="text-2xl font-bold text-gray-900">15</p>
+<p class="text-xs text-gray-500 uppercase tracking-wider">משתתפים</p>
+</div>
+<div class="text-center">
+<p class="text-2xl font-bold text-gray-900">4</p>
+<p class="text-xs text-gray-500 uppercase tracking-wider">שעות לימוד</p>
+</div>
+<div class="text-center">
+<p class="text-2xl font-bold text-gray-900">TLV</p>
+<p class="text-xs text-gray-500 uppercase tracking-wider">מיקום</p>
+</div>
+</div>
+</div>
+<!-- Content Section -->
+<div class="py-10 px-8 max-w-[600px] mx-auto">
+<h3 class="text-2xl font-bold text-gray-900 mb-4 text-center">על הקורס</h3>
+<p class="text-gray-600 leading-relaxed text-center mb-8">
+                                הצטרפו אלינו לסדנה מעשית שבה נלמד את עקרונות הצילום האורבני. נלמד על קומפוזיציה, אור וצל, וכיצד לתפוס רגעים ייחודיים בנוף העירוני. הסדנה כוללת סיור רגלי מודרך באזורים הכי פוטוגניים של תל אביב ומשוב אישי על הצילומים שלכם.
+                            </p>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-white border border-gray-100 shadow-sm rounded-lg flex flex-col items-center text-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">camera</span>
+<h4 class="font-bold text-sm">טכניקה</h4>
+<p class="text-xs text-gray-500">שליטה במצלמה ידנית</p>
+</div>
+<div class="p-4 bg-white border border-gray-100 shadow-sm rounded-lg flex flex-col items-center text-center gap-2">
+<span class="material-symbols-outlined text-primary text-3xl">light_mode</span>
+<h4 class="font-bold text-sm">תאורה</h4>
+<p class="text-xs text-gray-500">שימוש באור טבעי</p>
+</div>
+</div>
+</div>
+<!-- Map Placeholder -->
+<div class="h-48 w-full bg-gray-200 relative">
+<img class="w-full h-full object-cover grayscale opacity-60" data-alt="Map view of Tel Aviv city streets" data-location="Tel Aviv" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC5IGjMmn6dc9KW5hMDJLCkHV7bQd_IuyTm5UmtSWGhe-VN_Z_a8oR3CanQMH1p6nd8TubJjl6acT5UnYSp-QK9Ispm0APCBBTG1XyttIIBQvJV1rOSrTXbUgdFEiSVR_Z5BsmzXQ6JU52iaFQI6DHRQ6I1F_5Z3yJWwP0nLByY5AdAedUB-J4antMzhPKeLdomPOmEsRszEWpHxpQACPVqAgT_5qsgHLmNXZ9JUxP1Wmj6bQheT01pQ9WPnGMFZ8unZ77l0bYo7AWa"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-white/90 backdrop-blur-sm px-4 py-2 rounded-lg shadow-md flex items-center gap-2">
+<span class="material-symbols-outlined text-red-500">place</span>
+<span class="text-sm font-bold text-gray-800">רוטשילד 12, תל אביב</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer Action Bar -->
+<div class="sticky bottom-0 z-20 mt-8 -mx-4 md:-mx-8 lg:-mx-12 bg-surface-light dark:bg-surface-dark border-t border-gray-200 dark:border-gray-800 p-4 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.1)]">
+<div class="max-w-[1440px] mx-auto flex items-center justify-between px-4 md:px-8">
+<button class="flex items-center gap-2 px-6 py-2.5 rounded-lg border border-gray-300 dark:border-gray-600 text-text-main dark:text-white font-medium hover:bg-gray-50 dark:hover:bg-gray-800 transition cursor-pointer" onclick="goBack()">
+<span class="material-symbols-outlined text-lg flip-x">arrow_forward</span>
+                    חזור
+                </button>
+<div class="flex items-center gap-3">
+<button class="hidden sm:flex items-center gap-2 px-6 py-2.5 rounded-lg border border-primary text-primary font-bold hover:bg-primary/5 transition">
+<span class="material-symbols-outlined text-lg">visibility</span>
+                        תצוגה מקדימה מלאה
+                    </button>
+<button class="flex items-center gap-2 px-8 py-2.5 rounded-lg bg-primary hover:bg-primary-dark text-text-main font-bold shadow-md hover:shadow-lg transition cursor-pointer" onclick="window.location.href='dashboard.html'">
+<span class="material-symbols-outlined text-lg">save</span>
+                        שמור וחזור לדשבורד
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Global Styles needed for RTL icon flipping if needed -->
+<style>
+        [dir="rtl"] .flip-x {
+            transform: scaleX(-1);
+        }
+    </style>
+</body></html>

@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html class="light" dir="rtl" lang="he"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>CourseFlow - יצירת קורס</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&amp;family=Noto+Sans+Hebrew:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#13ecda",
+                        "primary-hover": "#0ddbc9",
+                        "background-light": "#f6f8f8",
+                        "background-dark": "#102220",
+                        "text-main": "#111817",
+                        "text-muted": "#618986",
+                        "border-color": "#dbe6e5",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "Noto Sans Hebrew", "sans-serif"],
+                        "sans": ["Inter", "Noto Sans Hebrew", "sans-serif"],
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "2xl": "1rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', 'Noto Sans Hebrew', sans-serif;
+        }.no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>    <script>
+        // Course Data Management
+        function saveCourseData() {
+            const courseData = {
+                title: document.querySelector('input[name="title"]')?.value || '',
+                description: document.querySelector('textarea[name="description"]')?.value || '',
+                duration: document.querySelector('input[name="duration"]')?.value || '',
+                targetAudience: document.querySelector('input[name="target_audience"]')?.value || '',
+                schedule: document.querySelector('input[name="schedule_details"]')?.value || '',
+                location: document.querySelector('input[name="location"]')?.value || '',
+                price: document.querySelector('input[name="price"]')?.value || '0',
+                size: document.querySelector('select[name="size"]')?.value || '',
+                aestheticStyle: document.querySelector('select[name="aesthetic_style"]')?.value || '',
+                colorPalette: document.querySelector('select[name="color_palette"]')?.value || '',
+                lighting: document.querySelector('select[name="lighting_and_atmosphere"]')?.value || '',
+                typography: document.querySelector('select[name="typography_style"]')?.value || '',
+                composition: document.querySelector('select[name="composition"]')?.value || '',
+                visualInspiration: document.querySelector('textarea[name="visual_inspiration"]')?.value || '',
+                createdAt: new Date().toISOString()
+            };
+            localStorage.setItem('courseData', JSON.stringify(courseData));
+            return courseData;
+        }
+
+        function saveCourseAndNavigate(page) {
+            event.preventDefault();
+            saveCourseData();
+            setTimeout(() => window.location.href = page, 300);
+        }
+
+        // Load data when page loads
+        window.addEventListener('DOMContentLoaded', function() {
+            const savedData = localStorage.getItem('courseData');
+            if (savedData) {
+                const courseData = JSON.parse(savedData);
+                document.querySelector('input[name="title"]').value = courseData.title || '';
+                document.querySelector('textarea[name="description"]').value = courseData.description || '';
+                document.querySelector('input[name="duration"]').value = courseData.duration || '';
+                document.querySelector('input[name="target_audience"]').value = courseData.targetAudience || '';
+                document.querySelector('input[name="schedule_details"]').value = courseData.schedule || '';
+                document.querySelector('input[name="location"]').value = courseData.location || '';
+                document.querySelector('input[name="price"]').value = courseData.price || '';
+                document.querySelector('select[name="size"]').value = courseData.size || '';
+                document.querySelector('select[name="aesthetic_style"]').value = courseData.aestheticStyle || '';
+                document.querySelector('select[name="color_palette"]').value = courseData.colorPalette || '';
+                document.querySelector('select[name="lighting_and_atmosphere"]').value = courseData.lighting || '';
+                document.querySelector('select[name="typography_style"]').value = courseData.typography || '';
+                document.querySelector('select[name="composition"]').value = courseData.composition || '';
+                document.querySelector('textarea[name="visual_inspiration"]').value = courseData.visualInspiration || '';
+            }
+        });
+    </script></head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white min-h-screen flex flex-col">
+<header class="sticky top-0 z-50 bg-white dark:bg-[#1a2e2c] border-b border-border-color dark:border-white/10 px-6 py-3 shadow-sm">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-4 text-text-main dark:text-white">
+<div class="size-8 text-primary">
+<svg class="w-full h-full" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path clip-rule="evenodd" d="M47.2426 24L24 47.2426L0.757355 24L24 0.757355L47.2426 24ZM12.2426 21H35.7574L24 9.24264L12.2426 21Z" fill="currentColor" fill-rule="evenodd"></path>
+</svg>
+</div>
+<h2 class="text-xl font-bold tracking-tight">EasyFlow</h2>
+</div>
+<div class="flex items-center gap-6">
+<button class="hidden md:flex items-center gap-2 text-text-muted hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help</span>
+<span class="text-sm font-medium">עזרה</span>
+</button>
+<div class="flex items-center gap-3 pl-2 border-l border-border-color dark:border-white/10">
+<div class="text-left hidden sm:block">
+<p class="text-sm font-bold leading-none text-text-main dark:text-white">דניאל כהן</p>
+<p class="text-xs text-text-muted">מרצה בכיר</p>
+</div>
+<div class="bg-center bg-no-repeat bg-cover rounded-full size-10 ring-2 ring-primary/20" data-alt="User profile picture of a smiling man" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDFlmiMQsjoQcEEXNiITz2HNtW23u97QW6NiB42lV9rAxivzWn-h9pUmEAuikg83y_KT2j9ZXP1A0UGvV8GjowmP1cRQJK-MyU0cl2SqhCe-Vs7terntW-XI-r_rrjsK6mgcAzf-ZsqG5lvnZoybdAur_Pkb98Vfo6dDd_rKeJiuLRlkjtN_5wfNucjbyBi6rRBITyb3wwxu30GEGB-j7NVykS_MbLatVPyFNiSZyve6Ivr-dvtFuwYzWUa7SrTjk4OPluGjB707cg7");'></div>
+</div>
+</div>
+</div>
+</header>
+<main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<div class="mb-10 max-w-4xl mx-auto">
+<div class="flex flex-col gap-3">
+<div class="flex justify-between items-end">
+<div>
+<p class="text-text-main dark:text-white text-lg font-bold">יצירת קורס חדש</p>
+<p class="text-text-muted text-sm">שלב 1 מתוך 3: מידע בסיסי</p>
+</div>
+<span class="text-primary text-sm font-bold">33%</span>
+</div>
+<div class="h-2 w-full bg-border-color dark:bg-white/10 rounded-full overflow-hidden">
+<div class="h-full bg-primary rounded-full" style="width: 33%"></div>
+</div>
+</div>
+</div>
+<div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+<div class="flex-1 w-full lg:w-2/3 space-y-8">
+<form class="space-y-8">
+<div class="bg-white dark:bg-[#1a2e2c] rounded-2xl p-6 sm:p-8 shadow-sm border border-border-color dark:border-white/5">
+<div class="mb-8">
+<h1 class="text-2xl font-bold text-text-main dark:text-white mb-2">פרטי הקורס</h1>
+<p class="text-text-muted">מלא את הפרטים הבסיסיים של הקורס. פרטים אלו יופיעו בדף הקורס ובחומרי השיווק.</p>
+</div>
+<div class="space-y-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">שם הקורס <span class="text-red-500">*</span></span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="title" placeholder="למשל: יסודות העיצוב הגרפי" required="" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">תיאור הקורס</span>
+<textarea class="w-full p-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none placeholder:text-text-muted/50" name="description" placeholder="פרט על מה נלמד בקורס, למי הוא מתאים ומה הערך המוסף..." rows="4"></textarea>
+</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">משך הקורס</span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="duration" placeholder="למשל: 10 שבועות, 60 שעות" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">קהל יעד</span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="target_audience" placeholder="למשל: מעצבים מתחילים, בעלי עסקים" type="text"/>
+</label>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">מועדים ושעות</span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="schedule_details" placeholder="למשל: ימי ראשון וחמישי, 18:00-21:00" type="text"/>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">מיקום</span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="location" placeholder="למשל: זום / תל אביב, דרך בגין 12" type="text"/>
+</label>
+</div>
+<div>
+<label class="flex flex-col gap-2 md:w-1/2 md:pr-0">
+<span class="text-sm font-semibold text-text-main dark:text-white">מחיר (₪)</span>
+<input class="w-full h-12 px-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all placeholder:text-text-muted/50" name="price" placeholder="0" type="number"/>
+</label>
+</div>
+</div>
+</div>
+<div class="bg-white dark:bg-[#1a2e2c] rounded-2xl p-6 sm:p-8 shadow-sm border border-border-color dark:border-white/5">
+<div class="mb-8">
+<h2 class="text-xl font-bold text-text-main dark:text-white mb-2">העדפות עיצוב</h2>
+<p class="text-sm text-text-muted">הגדר את הסגנון הוויזואלי הרצוי לחומרי השיווק של הקורס.</p>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">גודל / פורמט</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="size">
+<option selected="" value="instagram_square">פוסט מרובע (1:1)</option>
+<option value="instagram_story">סטורי (9:16)</option>
+<option value="a4_flyer">פלייר A4</option>
+<option value="youtube_thumbnail">תמונה ליוטיוב (16:9)</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">סגנון אסתטי</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="aesthetic_style">
+<option selected="" value="minimalist">מינימליסטי ונקי</option>
+<option value="modern_tech">הייטקי ומודרני</option>
+<option value="luxury">יוקרתי ואלגנטי</option>
+<option value="retro">רטרו / וינטג'</option>
+<option value="playful">שמח וצבעוני</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">פלטת צבעים</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="color_palette">
+<option selected="" value="brand_colors">בהתאם למותג</option>
+<option value="light_airy">בהיר ואוורירי</option>
+<option value="dark_mode">כהה ודרמטי</option>
+<option value="pastel">צבעי פסטל</option>
+<option value="vibrant">נועז ורווי</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">תאורה ואווירה</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="lighting_and_atmosphere">
+<option selected="" value="natural_light">אור יום טבעי</option>
+<option value="studio">תאורת אולפן</option>
+<option value="warm">חמימה וביתית</option>
+<option value="neon">ניאון / עתידני</option>
+<option value="soft">רכה ונעימה</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">סגנון טיפוגרפי</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="typography_style">
+<option selected="" value="modern_sans">מודרני (Sans Serif)</option>
+<option value="classic_serif">קלאסי (Serif)</option>
+<option value="bold_display">בולט וחזק</option>
+<option value="handwritten">כתב יד</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">קומפוזיציה</span>
+<div class="relative">
+<select class="w-full h-12 px-4 pl-10 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none appearance-none cursor-pointer" name="composition">
+<option selected="" value="balanced">מאוזנת</option>
+<option value="centered">מרוכזת</option>
+<option value="asymmetric">אסימטרית</option>
+<option value="minimal">מינימליסטית</option>
+<option value="collage">קולאז' / עמוס</option>
+</select>
+<span class="material-symbols-outlined absolute left-3 top-3 text-text-muted pointer-events-none">expand_more</span>
+</div>
+</label>
+</div>
+<label class="flex flex-col gap-2">
+<span class="text-sm font-semibold text-text-main dark:text-white">השראה ויזואלית</span>
+<textarea class="w-full p-4 rounded-lg border border-border-color bg-white dark:bg-black/20 dark:border-white/10 text-text-main dark:text-white focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all resize-none placeholder:text-text-muted/50" name="visual_inspiration" placeholder="תאר תמונה, סגנון או אווירה שנותנים לך השראה לעיצוב הקורס..." rows="3"></textarea>
+</label>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4">
+<button class="w-full sm:w-auto px-6 h-12 rounded-lg border border-border-color text-text-muted hover:text-text-main hover:border-text-main font-medium transition-colors cursor-pointer" onclick="window.location.href='dashboard.html'" type="button">
+                        שמור טיוטה
+                    </button>
+<button class="w-full sm:w-auto flex items-center justify-center gap-2 px-8 h-12 bg-primary hover:bg-primary-hover text-[#111817] text-base font-bold rounded-lg shadow-sm shadow-primary/20 transition-all transform active:scale-95" onclick="saveCourseAndNavigate('flyer-designer.html')" type="button">
+<span>הבא לשלב 2: עיצוב פלייר</span>
+<span class="material-symbols-outlined rtl:rotate-180">arrow_forward</span>
+</button>
+</div>
+</form>
+</div>
+<div class="hidden lg:block w-1/3">
+<div class="sticky top-28 space-y-4">
+<div class="flex items-center justify-between text-text-muted px-1">
+<span class="text-sm font-medium uppercase tracking-wider">תצוגה מקדימה</span>
+<span class="material-symbols-outlined text-sm">visibility</span>
+</div>
+<div class="bg-white dark:bg-[#1a2e2c] rounded-2xl overflow-hidden shadow-lg border border-border-color dark:border-white/10 group">
+<div class="relative h-48 bg-gray-100 dark:bg-black/40 w-full bg-cover bg-center" data-alt="Abstract gradient placeholder for course preview" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB1hNX_Yxgz3L_wUf4V_vJFeVz2rG60Wr1M7UkqqY4lRLZADnv6a7xwKssbN60Vw7NMOSqjqR5e7zpkGGxkMX2l86bbcCq0JLz3vRSo0guORZz4iQc0CBAABrtyLmd0zWjpn1FLMtohvtWIcEROeyjsKeD4_zHIopiRVS7_hL00rTd1oIRaIvr1JSi0OzD_0ksbdGAA1pDiptHz3mHJtQIuh5vbEcZhyqsSjXaolQVRvIazcF_m_3dck5S-Lg3XBQ5AHXtrkwzrVBLo");'>
+<div class="absolute top-3 right-3 bg-white/90 dark:bg-black/80 backdrop-blur-sm px-2 py-1 rounded text-xs font-bold text-text-main dark:text-white shadow-sm">
+                                חדש
+                            </div>
+</div>
+<div class="p-5 flex flex-col gap-3">
+<div>
+<h3 class="text-lg font-bold text-text-main dark:text-white leading-tight mb-1">שם הקורס יופיע כאן</h3>
+<p class="text-sm text-text-muted line-clamp-2">תיאור הקורס יופיע כאן בצורה מתומצתת ומושכת עבור התלמידים הפוטנציאליים...</p>
+</div>
+<div class="flex items-center gap-2 mt-1">
+<div class="size-6 rounded-full bg-gray-200 dark:bg-white/10 bg-center bg-cover" data-alt="Instructor avatar placeholder" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDSG_-KyriZvzvH63vlRZBFyAr9FL9IqLINWmE6QidHIQ_Xq0bomilAFRt7xc9uIIOmr0O_uV5fqbYnOdsahjMdcUeF3tIVwERlbe7Q3063S0YEFBGxbB9MI8C7Fw3XZjtlcNWMLmX2l-pPVC4z8PjTkcJm1uPRKBGIEy6jSDb32EfdfFSmBN4zNX4blnUOBpUVZchkr7RPJsM_m3LhHUbQ6Fy34Eoy4CmXTxOhzfNQNOewvNCdxvzUzqkX6poz5JRGG0T325ZSLAaY");'></div>
+<span class="text-xs font-medium text-text-muted">Tech Academy</span>
+</div>
+<div class="h-px bg-border-color dark:bg-white/10 my-1"></div>
+<div class="flex items-center justify-between">
+<div class="flex flex-col">
+<span class="text-xs text-text-muted">מחיר</span>
+<span class="text-xl font-bold text-text-main dark:text-white">₪0</span>
+</div>
+<button class="bg-[#111817] dark:bg-white text-white dark:text-[#111817] px-4 py-2 rounded-lg text-sm font-bold hover:opacity-90 transition-opacity">
+                                    הירשם עכשיו
+                                </button>
+</div>
+</div>
+</div>
+<div class="bg-primary/10 rounded-xl p-4 flex gap-3 items-start border border-primary/20">
+<span class="material-symbols-outlined text-primary mt-0.5">info</span>
+<p class="text-xs text-text-muted leading-relaxed">
+<strong class="text-text-main dark:text-white block mb-1">טיפ חשוב:</strong>
+                            פרטים מדויקים וסגנון ויזואלי מוגדר היטב עוזרים למערכת לייצר עבורך חומרי שיווק אפקטיביים יותר.
+                        </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+</body></html>
